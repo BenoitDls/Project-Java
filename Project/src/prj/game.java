@@ -11,8 +11,12 @@ public class game {
 				+ "L'utilisateur doit déduire des quatres mot affiché l'idée ou le mot approprié.\n"
 				+ "Pour donner le mot exact, il devra sélectionner parmi les lettres qui lui sont proposées.\n");
 		Scanner scan = new Scanner(System.in);
+		
 		String speudo;
-		int score = 0 ;
+		int scoreTotal = 0;
+		int essaie = 0;
+		int point = 0;
+		
 		do {
 			System.out.println("Entré votre Speudo :");
 			speudo = scan.nextLine();
@@ -38,7 +42,7 @@ public class game {
 			//choix du jeu au hasard
 			do {			
 				int min = 0;
-				int max = 6; //modifier la valeur suivant le nombre de possiblité de jeu dans le tableau
+				int max = 5; //modifier la valeur suivant le nombre de possiblité de jeu dans le tableau
 				int r = min + (int) (Math.random() * ((max - min) + 1));
 				int choixJeu = r; //valeur qui détermine le choix du jeu, la ligne du tableau
 
@@ -54,7 +58,8 @@ public class game {
 						{ "Vert", "Violet", "Orange", "Blanc", "Couleur", "7" },
 						{ "Tennis", "Natation", "Danse", "Athlétisme", "Sport", "5" },
 						{ "Lion", "Guépard", "Panterre", "Crocodile", "Animal", "7" } };
-
+				
+			
 				String reponseJeu = jeu[choixJeu][4]; //case du tableau correspondant a la reponse du jeu 
 				String lettreJeu = jeu[choixJeu][5];
 
@@ -67,18 +72,42 @@ public class game {
 				String reponse = scan.nextLine();
 
 				if (reponse.equalsIgnoreCase(reponseJeu)) {
-					score ++;
+					essaie = 1;
 					System.out.println("Bravo vous avez trouver la bonne réponse!\n");//si la premiere reponse est bonne 
+					System.out.println(essaie);
+					if (essaie >= 3){
+						scoreTotal = scoreTotal + 1;
+						System.out.println("Dommage tu as trouvé la réponse en plus de 3 essaies tu gagnes seulement 1 point");
+					} else if (essaie == 2){
+						scoreTotal = scoreTotal + 2;
+						System.out.println("Bravo tu as trouver la réponse en 2 essaies! tu gagnes 2 points.");
+					} else if (essaie == 1){
+						scoreTotal = scoreTotal + 3;
+						System.out.println("Bravo tu as trouver la réponse en 1 essaies! Tu gagnes 2 points.");
+					}
 
 				} else { //si la premiere reponse est fausse
 					String reponse2;
 					do {
 						System.out.println("Mauvaise réponse! \nLe mot est :");
 						reponse2 = scan.nextLine();
+						essaie ++;
 					} while (!reponse2.equalsIgnoreCase(reponseJeu)); //si une des reponses suivantes est bonne 
-					score ++;
-					System.out.println("Bravo vous avez trouver la bonne réponse!\n");
+					essaie ++;
+					System.out.println(essaie);
+					if (essaie >= 3){
+						scoreTotal = scoreTotal + 1;
+						System.out.println("Dommage tu as trouvé la réponse en plus de 3 essaies tu gagnes seulement 1 point");
+					} else if (essaie == 2){
+						scoreTotal = scoreTotal + 2;
+						System.out.println("Bravo tu as trouver la réponse en 2 essaies! tu gagnes 2 points.");
+					} else if (essaie == 1){
+						scoreTotal = scoreTotal + 3;
+						System.out.println("Bravo tu as trouver la réponse en 1 essaies! Tu gagnes 2 points.");
+					}
+					System.out.println("Bravo vous avez trouver la bonne réponse en " + essaie + " essaies! Vous gagné " + point +" points.");
 				}
+				System.out.println("Score : " + scoreTotal +"\n");
 
 				System.out.println("Voulez vous rejouez ? (O/N)");
 				ouiOuNon2 = scan.nextLine();
@@ -89,7 +118,7 @@ public class game {
 				}
 
 			} while (ouiOuNon2.equalsIgnoreCase(oui));
-			System.out.println("Bien joué " + speudo + " vous avez totalisé un score de " + score + " points!");
+			System.out.println("Bien joué " + speudo + " vous avez totalisé un score de " + scoreTotal + " points!");
 			System.out.println("Fin du jeu!");
 
 		}
